@@ -17,7 +17,7 @@ public class User implements Serializable, RowMapper<User> {
 
     @NotBlank(message = "用户名不能为空")
     @Length()
-    private String name;
+    private String username;
 
     @Email(message = "请输入邮箱")
     @NotBlank(message = "邮箱不能为空")
@@ -39,7 +39,7 @@ public class User implements Serializable, RowMapper<User> {
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt("id"));
-        user.setName(resultSet.getString("username"));
+        user.setUsername(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
         return user;
     }

@@ -4,19 +4,12 @@ import com.example.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author longzhonghua
- * @data 2/24/2019 9:51 AM
- */
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -124,6 +117,13 @@ public class UserController {
         List<User> userList = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper(User.class));
         return userList;
+    }
+
+    @DeleteMapping("deleteUser")
+    public String deleteUserById(String id){
+        String sql = "DELETE FROM  user  WHERE ID = ?";
+        int rows = jdbcTemplate.update(sql, id);
+        return "delete请求删除成功，影响" + rows + "行";
     }
 
 }

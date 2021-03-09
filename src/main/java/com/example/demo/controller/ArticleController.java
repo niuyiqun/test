@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * @author longzhonghua
- * @data 2018/11/04 22:30
- */
+
 @Controller
 @RequestMapping("article")
 public class ArticleController {

@@ -7,16 +7,11 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 
+
 /**
- * Copyright (C), 2019-2019, XXX有限公司
- * FileName: article
- * Author:   longzhonghua
- * Date:     2019/4/27 16:01
- * Description:
- * History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
+ * JPA模块实现
  */
+
 @Entity
 @Data
 public class Article extends BaseEntity implements Serializable {

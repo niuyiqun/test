@@ -11,8 +11,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 /**
- * @author longzhonghua
- * @data 2018/11/04 22:30
+ * JPA模块实现
  */
 
 /**

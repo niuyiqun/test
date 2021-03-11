@@ -1,129 +1,64 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * @author longzhonghua
+ * mybaits
+ */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    UserMapper userMapper;
 
-    //创建数据表
-    @GetMapping("createUserTable")
-    public String createUserTable() throws Exception {
-        String sql = "CREATE TABLE `user` (\n" +
-                "  `id` int(10) NOT NULL AUTO_INCREMENT,\n" +
-                "  `username` varchar(100) DEFAULT NULL,\n" +
-                "  `password` varchar(100) DEFAULT NULL,\n" +
-                "  PRIMARY KEY (`id`)\n" +
-                ") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;\n" +
-                "\n";
-
-            jdbcTemplate.execute(sql);
-            return "创建表成功";
-
+    @RequestMapping("/querybyid")
+    User queryById(int id) {
+        return userMapper.queryById(id);
     }
 
-    //saveUserTest
-    //添加一个测试数据
-    @GetMapping("saveUserTest")
-    public String saveUserTest()throws Exception  {
-        String sql = "INSERT INTO user (USERNAME,PASSWORD) VALUES ('lll','123456')";
-        int rows = jdbcTemplate.update(sql);
-        return "执行成功，影响" + rows + "行";
+    @RequestMapping("/")
+    List<User> queryAll() {
+        return userMapper.queryAll();
     }
 
-    //batchSaveUser
-    //批量添加测试数据
-    @GetMapping("batchSave")
-    public String batchSaveUser()throws Exception  {
-        String sql =
-                "INSERT INTO user (USERNAME,PASSWORD) VALUES (?,?)";
-        List<Object[]> arrayList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            String[] arr = new String[2];
-            arr[0] = "longzhiran" + i;
-            arr[1] = "123456" + i;
-            arrayList.add(arr);
+
+    @RequestMapping("/add")
+    String add(User user) {
+        return userMapper.add(user) == 1 ? "success" : "failed";
+    }
+
+    @RequestMapping("/updatebyid")
+    String updateById(User user) {
+        return userMapper.updateById(user) == 1 ? "success" : "failed";
+    }
+
+    @RequestMapping("/delbyid")
+    String delById(int id) {
+        return userMapper.delById(id) == 1 ? "success" : "failed";
+    }
+
+    @RequestMapping("/addalot")
+    void addUserAlot() {
+        for (int i=0;i<10;i++){
+            User user=new User();
+            user.setId(i);
+            user.setAge(i+20);
+            user.setName("niu");
+            userMapper.add(user);
         }
-        jdbcTemplate.batchUpdate(sql, arrayList);
-        return "执行成功";
-    }
 
-    //addUser?userName=longzhiran&passWord=123456
-    //
-    @GetMapping("add")
-    public String addUser(String userName, String passWord) throws Exception {
-        String sql = "INSERT INTO user (USERNAME,PASSWORD) VALUES (?,?)";
-        int rows = jdbcTemplate.update(sql, userName, passWord);
-        return "执行成功，影响" + rows + "行";
-    }
-
-    //updateUserPassword?id=1&passWord=12345678
-    @GetMapping("updateUserPassword")
-    public String updateUserPassword(int id, String passWord) throws Exception {
-        String sql = "UPDATE user SET PASSWORD = ? WHERE ID = ?";
-        int rows = jdbcTemplate.update(sql, passWord, id);
-        return "执行成功，影响" + rows + "行";
-    }
-
-    //deleteUserById?id=1
-    @PostMapping("deleteUserById")
-    public String deleteUserById(int id) throws Exception {
-        String sql = "DELETE FROM  user  WHERE ID = ?";
-        int rows = jdbcTemplate.update(sql, id);
-        return "执行成功，影响" + rows + "行";
-    }
-
-
-    //getUserByName?userName=longzhiran
-    @GetMapping("getUserByName")
-    public List getUserByName(String userName)throws Exception {
-        String sql = "SELECT * FROM user WHERE USERNAME = ?";
-        List<User> list = jdbcTemplate.query(sql, new User(), new Object[]{userName});
-        return list;
-    }
-
-    //getMapById?id=1
-    @GetMapping("getMapById")
-    public Map getMapById(Integer id) throws Exception {
-        String sql = "SELECT * FROM user WHERE ID = ?";
-        Map map = jdbcTemplate.queryForMap(sql, id);
-        return map;
-    }
-
-    //getUserById?id=1
-    @GetMapping("getUserById")
-    public User getUserById(Integer id) throws Exception {
-        String sql = "SELECT * FROM user WHERE ID = ?";
-        User user = jdbcTemplate.queryForObject(sql, new User(), new Object[]{id});
-        return user;
-    }
-
-    //getAll
-    @GetMapping("list")
-    public List<User> list() throws Exception {
-        String sql = "SELECT * FROM user";
-
-        List<User> userList = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper(User.class));
-        return userList;
-    }
-
-    @DeleteMapping("deleteUser")
-    public String deleteUserById(String id){
-        String sql = "DELETE FROM  user  WHERE ID = ?";
-        int rows = jdbcTemplate.update(sql, id);
-        return "delete请求删除成功，影响" + rows + "行";
     }
 
 }

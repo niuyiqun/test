@@ -1,6 +1,11 @@
 package com.example.demo.entity;
 
+/**
+ * 未整合shiro情况下的mybaits实体
+ */
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @program: test0.java
@@ -10,8 +15,12 @@ import lombok.Data;
  **/
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private int id;
     private String name;
     private int age;
+    private String password;
+    private String perms;
 }

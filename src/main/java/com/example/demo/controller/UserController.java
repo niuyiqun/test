@@ -4,7 +4,13 @@ import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +22,7 @@ import java.util.List;
  * @author longzhonghua
  * mybaits
  */
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -25,7 +31,7 @@ public class UserController {
 
     @RequestMapping("/querybyid")
     User queryById(int id) {
-        return userMapper.queryById(id);
+        return userMapper.findById(id);
     }
 
     @RequestMapping("/")
@@ -59,6 +65,38 @@ public class UserController {
             userMapper.add(user);
         }
 
+    }
+
+    @RequestMapping("/login")
+    public String login(String name,String password){
+        System.out.println("name="+name);
+        /**
+         * 使用Shiro编写认证操作
+         */
+        //1.获取Subject
+        Subject subject = SecurityUtils.getSubject();
+
+        //2.封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(name,password);
+
+        //3.执行登录方法
+        try {
+            subject.login(token);
+
+            //登录成功
+            //跳转到test.html
+            return "/user/success";
+        } catch (UnknownAccountException e) {
+            //e.printStackTrace();
+            //登录失败:用户名不存在，UnknownAccountException是Shiro抛出的找不到用户异常
+//            model.addAttribute("msg", "用户名不存在");
+            return "/user/wrongUsername";
+        }catch (IncorrectCredentialsException e) {
+            //e.printStackTrace();
+            //登录失败:密码错误，IncorrectCredentialsException是Shiro抛出的密码错误异常
+//            model.addAttribute("msg", "密码错误");
+            return "/user/wrongPassword";
+        }
     }
 
 }

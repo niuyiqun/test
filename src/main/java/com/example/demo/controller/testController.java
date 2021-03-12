@@ -32,11 +32,11 @@ public class testController {
         return "用户[" + userName +"]注册成功~!";
     }
 
-    @RequestMapping("login")
-    @LoginAnno
-    public String login(String userName) {
-        return "欢迎您:" + userName;
-    }
+//    @RequestMapping("login")
+//    @LoginAnno
+//    public String login(String userName) {
+//        return "欢迎您:" + userName;
+//    }
 
     @RequestMapping("/BusinessException")
     public String testResponseStatusExceptionResolver(@RequestParam("i") int i){

@@ -6,6 +6,25 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * 未整合shiro情况下的mybaits实体mapping
+ */
 /**
  * @author niu
  */
@@ -13,7 +32,7 @@ import java.util.List;
 public interface UserMapper {
 
     @Select("SELECT * FROM user WHERE id = #{id}")
-    User queryById(@Param("id") int id);
+    User findById(@Param("id") int id);
 
     @Select("SELECT * FROM user limit 1000")
     List<User> queryAll();
@@ -29,4 +48,7 @@ public interface UserMapper {
 //
     @Select("SELECT * FROM user limit 1000")
     Page<User> getUserList();
+
+    @Select("SELECT * FROM user WHERE name = #{name}")
+    User findByName(@Param("name") String name);
 }

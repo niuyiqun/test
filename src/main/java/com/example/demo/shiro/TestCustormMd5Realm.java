@@ -25,13 +25,8 @@ public class TestCustormMd5Realm {
         //设置realm使用hash凭证匹配器    CredentialsMatcher凭证匹配器  默认是明文
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("md5");  //设置密码匹配的方式
-        hashedCredentialsMatcher.setHashIterations(1024);   //设置散列的次数
         realm.setCredentialsMatcher(hashedCredentialsMatcher);
-
-
         defaultSecurityManager.setRealm(realm);
-
-
         SecurityUtils.setSecurityManager(defaultSecurityManager);
         Subject subject = SecurityUtils.getSubject();
 

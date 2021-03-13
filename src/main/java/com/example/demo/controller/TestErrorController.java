@@ -34,7 +34,7 @@ public class TestErrorController implements ErrorController {
         //用Map容器返回信息
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", 404);
-        map.put("msg", "自定义的不存在");
+        map.put("msg", "该页面不存在");
         return map;
     }
     /*这里加一个能正常访问的页面,作为比较

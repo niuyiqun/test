@@ -37,7 +37,7 @@ public interface UserMapper {
     @Select("SELECT * FROM user limit 1000")
     List<User> queryAll();
 
-    @Insert({"INSERT INTO user(name,age) VALUES(#{name},#{age})"})
+    @Insert({"INSERT INTO user(name,password) VALUES(#{name},#{password})"})
     int add(User user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")

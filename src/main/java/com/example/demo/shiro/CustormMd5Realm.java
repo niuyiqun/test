@@ -30,8 +30,8 @@ public class CustormMd5Realm extends AuthorizingRealm {
 
         if ("xiaochen".equals(principal)){
 
-            return new SimpleAuthenticationInfo(principal,"ab9e6151b1922bbf2681b142ccdff55d",
-                    ByteSource.Util.bytes("*7skh"),this.getName());
+            return new SimpleAuthenticationInfo(principal,"e52c4a472bed1653e097c72d175491f6",
+                    this.getName());
         }
         return null;
 

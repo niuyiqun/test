@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+/**
+ * 基于jpa管理的article实体类的控制器
+ */
+
 @Controller
 @RequestMapping("article")
 public class ArticleController {

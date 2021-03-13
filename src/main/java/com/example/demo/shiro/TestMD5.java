@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
  **/
 
 public class TestMD5 {
+
+
     public static void main(String[] args) {
         //创建md5算法
 
@@ -24,6 +26,5 @@ public class TestMD5 {
 
         //使用md5 + salt + hash散列
         System.out.println(new Md5Hash("nyq200103240059","*7skh",1024).toHex());   //最后一个参数--散列次数
-
     }
 }

@@ -3,24 +3,9 @@ package com.example.demo.mapper;
 import com.example.demo.entity.User;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * 未整合shiro情况下的mybaits实体mapping
@@ -28,6 +13,7 @@ import java.util.List;
 /**
  * @author niu
  */
+@Repository
 @Mapper
 public interface UserMapper {
 
